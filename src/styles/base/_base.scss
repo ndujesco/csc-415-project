@@ -30,7 +30,7 @@ p {
 
   &.big {
     $vw: 100vw;
-    font-size: calc($vw / 1920px * 20px);
+    font-size: calc($vw / 1440px * 20px);
 
     @include media('<phone') {
       font-size: calc($vw / 750px * 20px);
@@ -44,7 +44,7 @@ p {
 
   &.bigger {
     $vw: 100vw;
-    font-size: calc($vw / 1920px * 32px);
+    font-size: calc($vw / 1440px * 32px);
 
     @include media('<phone') {
       font-size: calc($vw / 750px * 32px);
@@ -76,7 +76,6 @@ h1 {
   font-family: $font-cabinet;
   $vw: 100vw;
   font-size: calc($vw / 1440px * 64px);
-  width: 64vw;
 
   @include media('<phone') {
     font-size: calc($vw / 750px * 64px);
@@ -147,7 +146,7 @@ h5 {
 h6 {
   $vw: 100vw;
   font-family: $font-cabinet;
-  font-size: calc($vw / 1920px * 22px);
+  font-size: calc($vw / 1440px * 22px);
 
   @include media('<phone') {
     font-size: calc($vw / 750px * 22px);
@@ -173,12 +172,10 @@ input, textarea {
   width: 100%;
   border-radius: 8px;
   padding: 12px;
-  margin-bottom: 1rem;
-  margin-top: 0.5rem;
   color: $color-white;
   font-family: $font-inter;
   $vw: 100vw;
-  font-size: calc($vw / 1920px * 18px);
+  font-size: calc($vw / 1440px * 18px);
   background: transparent;
 
   @include media('<phone') {
