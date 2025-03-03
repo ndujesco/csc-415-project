@@ -1,0 +1,245 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  user-select: none;
+}
+
+html, body {
+  line-height: 1;
+  font-family: $font-inter !important;
+  background-color: $color-black;
+  color: $color-white;
+  scroll-behavior: smooth;
+  height: auto;
+  $vw: 100vw;
+  font-size: calc($vw / 1440px * 16px);
+
+  @include media('<phone') {
+    font-size: calc($vw / 750px * 18px);
+    overflow-x: hidden;
+  }
+
+  @include media('<small') {
+    font-size: calc($vw / 500px * 18px);
+  }
+}
+
+p {
+  line-height: 1.5;
+
+  &.big {
+    $vw: 100vw;
+    font-size: calc($vw / 1920px * 20px);
+
+    @include media('<phone') {
+      font-size: calc($vw / 750px * 20px);
+      overflow-x: hidden;
+    }
+
+    @include media('<small') {
+      font-size: calc($vw / 500px * 20px);
+    }
+  }
+
+  &.bigger {
+    $vw: 100vw;
+    font-size: calc($vw / 1920px * 32px);
+
+    @include media('<phone') {
+      font-size: calc($vw / 750px * 32px);
+      overflow-x: hidden;
+    }
+
+    @include media('<small') {
+      font-size: calc($vw / 500px * 30px);
+    }
+  }
+}
+
+small {
+  $vw: 100vw;
+  font-size: calc($vw / 1440px * 14px);
+
+  @include media('<phone') {
+    font-size: calc($vw / 750px * 14px);
+    overflow-x: hidden;
+  }
+
+  @include media('<small') {
+    font-size: calc($vw / 500px * 13px);
+  }
+}
+
+h1 {
+  line-height: 1.2;
+  font-family: $font-cabinet;
+  $vw: 100vw;
+  font-size: calc($vw / 1440px * 64px);
+  width: 64vw;
+
+  @include media('<phone') {
+    font-size: calc($vw / 750px * 64px);
+    width: auto;
+  }
+
+  @include media('<small') {
+    font-size: calc($vw / 500px * 45px);
+  }
+}
+
+h2 {
+  $vw: 100vw;
+  font-family: $font-cabinet;
+  font-size: calc($vw / 1440px * 48px);
+
+  @include media('<phone') {
+    font-size: calc($vw / 750px * 48px);
+  }
+
+  @include media('<small') {
+    font-size: calc($vw / 500px * 38px);
+  }
+}
+
+h3 {
+  $vw: 100vw;
+  font-family: $font-cabinet;
+  font-size: calc($vw / 1440px * 40px);
+
+  @include media('<phone') {
+    font-size: calc($vw / 750px * 40px);
+  }
+
+  @include media('<small') {
+    font-size: calc($vw / 500px * 32px);
+  }
+}
+
+h4 {
+  $vw: 100vw;
+  font-family: $font-cabinet;
+  font-size: calc($vw / 1440px * 32px);
+
+  @include media('<phone') {
+    font-size: calc($vw / 750px * 32px);
+  }
+
+  @include media('<small') {
+    font-size: calc($vw / 500px * 28px);
+  }
+}
+
+h5 {
+  $vw: 100vw;
+  font-family: $font-cabinet;
+  font-size: calc($vw / 1440px * 24px);
+
+  @include media('<phone') {
+    font-size: calc($vw / 750px * 24px);
+  }
+
+  @include media('<small') {
+    font-size: calc($vw / 500px * 22px);
+  }
+}
+
+h6 {
+  $vw: 100vw;
+  font-family: $font-cabinet;
+  font-size: calc($vw / 1920px * 22px);
+
+  @include media('<phone') {
+    font-size: calc($vw / 750px * 22px);
+  }
+
+  @include media('<small') {
+    font-size: calc($vw / 500px * 20px);
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+}
+
+img {
+  vertical-align: middle;
+}
+
+input, textarea {
+  border: 1px solid $color-black;
+  width: 100%;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+  color: $color-white;
+  font-family: $font-inter;
+  $vw: 100vw;
+  font-size: calc($vw / 1920px * 18px);
+  background: transparent;
+
+  @include media('<phone') {
+    font-size: calc($vw / 750px * 16px);
+  }
+
+  @include media('<small') {
+    font-size: calc($vw / 500px * 16px);
+  }
+
+  &[type='file'] {
+    width: 30%;
+
+    @include media('<small') {
+      width: 70%;
+    }
+  }
+
+  &::placeholder {
+    color: $color-black;
+  }
+
+  &:focus {
+    border: 1px solid $color-white;
+    outline: none;
+  }
+}
+
+button {
+  padding: 16px 30px;
+  background: $color-black;
+  color: $color-white;
+  border-radius: 15px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 500;
+
+  &.outline {
+    background: none;
+    border: 1px solid $color-black;
+    border-radius: 30px;
+    color: $color-white;
+    outline: none;
+  }
+}
+
+.desktop {
+  display: auto !important;
+
+  @include media('<phone') {
+    display: none !important;
+  }
+}
+
+.phone {
+  display: none !important;
+  
+  @include media('<phone') {
+    display: block !important;
+  }
+}
