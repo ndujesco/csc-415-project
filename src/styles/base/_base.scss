@@ -167,63 +167,63 @@ img {
   vertical-align: middle;
 }
 
-input, textarea {
-  border: 1px solid $color-black;
-  width: 100%;
-  border-radius: 8px;
-  padding: 12px;
-  color: $color-white;
-  font-family: $font-inter;
-  $vw: 100vw;
-  font-size: calc($vw / 1440px * 18px);
-  background: transparent;
+// input, textarea {
+//   border: 1px solid $color-black;
+//   width: 100%;
+//   border-radius: 8px;
+//   padding: 12px;
+//   color: $color-white;
+//   font-family: $font-inter;
+//   $vw: 100vw;
+//   font-size: calc($vw / 1440px * 18px);
+//   background: transparent;
 
-  @include media('<phone') {
-    font-size: calc($vw / 750px * 16px);
-  }
+//   @include media('<phone') {
+//     font-size: calc($vw / 750px * 16px);
+//   }
 
-  @include media('<small') {
-    font-size: calc($vw / 500px * 16px);
-  }
+//   @include media('<small') {
+//     font-size: calc($vw / 500px * 16px);
+//   }
 
-  &[type='file'] {
-    width: 30%;
+//   &[type='file'] {
+//     width: 30%;
 
-    @include media('<small') {
-      width: 70%;
-    }
-  }
+//     @include media('<small') {
+//       width: 70%;
+//     }
+//   }
 
-  &::placeholder {
-    color: $color-black;
-  }
+//   &::placeholder {
+//     color: $color-black;
+//   }
 
-  &:focus {
-    border: 1px solid $color-white;
-    outline: none;
-  }
-}
+//   &:focus {
+//     border: 1px solid $color-white;
+//     outline: none;
+//   }
+// }
 
-button {
-  padding: 16px 30px;
-  background: $color-black;
-  color: $color-white;
-  border-radius: 15px;
-  border: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  font-weight: 500;
+// button {
+//   padding: 16px 30px;
+//   background: $color-black;
+//   color: $color-white;
+//   border-radius: 15px;
+//   border: none;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   cursor: pointer;
+//   font-weight: 500;
 
-  &.outline {
-    background: none;
-    border: 1px solid $color-black;
-    border-radius: 30px;
-    color: $color-white;
-    outline: none;
-  }
-}
+//   &.outline {
+//     background: none;
+//     border: 1px solid $color-black;
+//     border-radius: 30px;
+//     color: $color-white;
+//     outline: none;
+//   }
+// }
 
 .desktop {
   display: auto !important;
