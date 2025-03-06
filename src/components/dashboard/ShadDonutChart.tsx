@@ -35,9 +35,9 @@ export default function ShadDonutChart({ data, colors }: Props) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Customers</CardTitle>
+        <CardTitle>Orders</CardTitle>
         <CardDescription>
-          Showing the number of customers last week and the current week
+          Showing the number of orders last week and the current week
         </CardDescription>
       </CardHeader>
       <CardContent>

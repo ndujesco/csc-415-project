@@ -31,12 +31,12 @@ const Dashboard: React.FC = () => {
     };
 
     const areaChartData = [
-        { month: "January", currentWeek: 186, previousWeek: 80 },
-        { month: "February", currentWeek: 305, previousWeek: 200 },
-        { month: "March", currentWeek: 237, previousWeek: 120 },
-        { month: "April", currentWeek: 73, previousWeek: 190 },
-        { month: "May", currentWeek: 209, previousWeek: 130 },
-        { month: "June", currentWeek: 214, previousWeek: 140 },
+        { month: "Monday", currentWeek: 186, previousWeek: 80 },
+        { month: "Tuesday", currentWeek: 305, previousWeek: 200 },
+        { month: "Wednesday", currentWeek: 237, previousWeek: 120 },
+        { month: "Thursday", currentWeek: 73, previousWeek: 190 },
+        { month: "Friday", currentWeek: 209, previousWeek: 130 },
+        { month: "Saturday", currentWeek: 214, previousWeek: 140 },
     ];
       
     const areaChartColors = {
