@@ -21,7 +21,6 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
@@ -35,21 +34,21 @@ import {
 } from "@/components/ui/table"
 import { useState } from "react"
 
-export type Order = {
+export type InventoryItem = {
     id: string
-    amount: number
-    status: "pending" | "fulfilled"
-    address: string
-    order: string[]
-    email: string
+    price: number
+    status: "In Stock" | "Out of Stock"
+    quantity: number
+    name: string
+    category: string
 }
 
 type Props = {
-    data: Order[]
+    data: InventoryItem[]
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const columns: ColumnDef<Order>[] = [
+export const columns: ColumnDef<InventoryItem>[] = [
     {
         id: "select",
         header: ({ table }) => (
@@ -73,12 +72,42 @@ export const columns: ColumnDef<Order>[] = [
         enableHiding: false,
     },
     {
+        accessorKey: "name",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Name
+                    <ArrowUpDown />
+                </Button>
+            )
+        },
+        cell: ({ row }) => <div className="lowercase">{row.getValue("name")}</div>,
+    },
+    {
+        accessorKey: "category",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Category
+                    <ArrowUpDown />
+                </Button>
+            )
+        },
+        cell: ({ row }) => <div className="lowercase">{row.getValue("category")}</div>,
+    },
+    {
         accessorKey: "status",
-        header: "Status",
+        header: "Availability",
         cell: ({ row }) => (
             <div
                 className={`capitalize ${
-                    row.getValue("status") === "fulfilled" ? "text-green-500" : "text-yellow-500"
+                    row.getValue("status") === "In Stock" ? "text-green-500" : "text-red-500"
                 }`}
             >
                 {row.getValue("status")}
@@ -86,61 +115,31 @@ export const columns: ColumnDef<Order>[] = [
         ),
     },
     {
-        accessorKey: "email",
+        accessorKey: "quantity",
         header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Email
+                    Quantity
                     <ArrowUpDown />
                 </Button>
             )
         },
-        cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+        cell: ({ row }) => <div>{row.getValue("quantity")}</div>,
     },
     {
-        accessorKey: "address",
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Address
-                    <ArrowUpDown />
-                </Button>
-            )
-        },
-        cell: ({ row }) => <div>{row.getValue("address")}</div>,
-    },
-    {
-        accessorKey: "order",
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Order
-                    <ArrowUpDown />
-                </Button>
-            )
-        },
-        cell: ({ row }) => <div className="lowercase">{(row.getValue("order") as string[]).toString()}</div>,
-    },
-    {
-        accessorKey: "amount",
-        header: () => <div className="text-right">Amount</div>,
+        accessorKey: "price",
+        header: () => <div className="text-right">price</div>,
         cell: ({ row }) => {
-            const amount = parseFloat(row.getValue("amount"))
+            const price = parseFloat(row.getValue("price"))
 
-            // Format the amount as a dollar amount
+            // Format the price as a dollar price
             const formatted = new Intl.NumberFormat("en-US", {
                 style: "currency",
                 currency: "USD",
-            }).format(amount)
+            }).format(price)
 
             return <div className="text-right font-medium">{formatted}</div>
         },
@@ -148,9 +147,7 @@ export const columns: ColumnDef<Order>[] = [
     {
         id: "actions",
         enableHiding: false,
-        cell: ({ row }) => {
-            const order = row.original
-
+        cell: () => {
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -161,14 +158,7 @@ export const columns: ColumnDef<Order>[] = [
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(order.id)}
-                        >
-                            Copy Order ID
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>View customer</DropdownMenuItem>
-                        <DropdownMenuItem>View Order details</DropdownMenuItem>
+                        <DropdownMenuItem>View Item details</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )
@@ -176,7 +166,7 @@ export const columns: ColumnDef<Order>[] = [
     },
 ]
 
-export default function OrderTable({data}: Props) {
+export default function InventoryTable({data}: Props) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
@@ -211,10 +201,10 @@ export default function OrderTable({data}: Props) {
         <div className="w-full">
             <div className="flex items-center py-4">
                 <Input
-                    placeholder="Filter emails..."
-                    value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+                    placeholder="Filter items..."
+                    value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
-                        table.getColumn("email")?.setFilterValue(event.target.value)
+                        table.getColumn("name")?.setFilterValue(event.target.value)
                     }
                     className="max-w-sm"
                 />
@@ -254,16 +244,16 @@ export default function OrderTable({data}: Props) {
                         <DropdownMenuItem onClick={() => handleStatusFilterChange(undefined)}>
                             Show All
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleStatusFilterChange("fulfilled")}>
-                            Fulfilled
+                        <DropdownMenuItem onClick={() => handleStatusFilterChange("In Stock")}>
+                            In Stock
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleStatusFilterChange("pending")}>
-                            Pending
+                        <DropdownMenuItem onClick={() => handleStatusFilterChange("Out of Stock")}>
+                            Out of Stock
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
-            <div className="rounded-md border">
+            <div className="rounded-md bInventoryItem">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (

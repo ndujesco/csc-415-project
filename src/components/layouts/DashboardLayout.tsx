@@ -29,12 +29,12 @@ const DashboardLayout = () => {
         "--sidebar-width-mobile": "18rem",
       } as React.CSSProperties}
     >
-      <div className="flex h-screen">
+      <div className="flex h-screen w-screen">
         {/* Sidebar */}
         <SideNav />
 
         {/* Main Content Area */}
-        <SidebarInset className="flex flex-1 flex-col">
+        <SidebarInset className="flex flex-1 flex-col overflow-y-hidden">
           {/* Header with Breadcrumbs */}
           <header className="flex h-16 shrink-0 items-center gap-2">
             <div className="flex items-center gap-2 px-4">
@@ -73,7 +73,7 @@ const DashboardLayout = () => {
           </header>
 
           {/* Main Content Area with Outlet */}
-          <div className="flex-1 p-4">
+          <div className="flex-1 p-4 overflow-y-auto">
             <Outlet />
           </div>
         </SidebarInset>
