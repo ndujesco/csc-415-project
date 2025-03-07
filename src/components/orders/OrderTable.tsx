@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from "react";
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -10,11 +10,11 @@ import {
     getPaginationRowModel,
     getSortedRowModel,
     useReactTable,
-} from "@tanstack/react-table"
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
+} from "@tanstack/react-table";
+import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
@@ -23,30 +23,23 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
-import { useState } from "react"
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useState } from "react";
 
 export type Order = {
-    id: string
-    amount: number
-    status: "pending" | "fulfilled"
-    address: string
-    order: string[]
-    email: string
-}
+    id: string;
+    amount: number;
+    status: "pending" | "fulfilled";
+    address: string;
+    order: string[];
+    email: string;
+};
 
 type Props = {
-    data: Order[]
-}
+    data: Order[];
+};
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const columns: ColumnDef<Order>[] = [
@@ -54,10 +47,7 @@ export const columns: ColumnDef<Order>[] = [
         id: "select",
         header: ({ table }) => (
             <Checkbox
-                checked={
-                    table.getIsAllPageRowsSelected() ||
-                    (table.getIsSomePageRowsSelected() && "indeterminate")
-                }
+                checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")}
                 onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
                 aria-label="Select all"
             />
@@ -89,14 +79,11 @@ export const columns: ColumnDef<Order>[] = [
         accessorKey: "email",
         header: ({ column }) => {
             return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
+                <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
                     Email
                     <ArrowUpDown />
                 </Button>
-            )
+            );
         },
         cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
     },
@@ -104,14 +91,11 @@ export const columns: ColumnDef<Order>[] = [
         accessorKey: "address",
         header: ({ column }) => {
             return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
+                <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
                     Address
                     <ArrowUpDown />
                 </Button>
-            )
+            );
         },
         cell: ({ row }) => <div>{row.getValue("address")}</div>,
     },
@@ -119,14 +103,11 @@ export const columns: ColumnDef<Order>[] = [
         accessorKey: "order",
         header: ({ column }) => {
             return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
+                <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
                     Order
                     <ArrowUpDown />
                 </Button>
-            )
+            );
         },
         cell: ({ row }) => <div className="lowercase">{(row.getValue("order") as string[]).toString()}</div>,
     },
@@ -134,22 +115,22 @@ export const columns: ColumnDef<Order>[] = [
         accessorKey: "amount",
         header: () => <div className="text-right">Amount</div>,
         cell: ({ row }) => {
-            const amount = parseFloat(row.getValue("amount"))
+            const amount = parseFloat(row.getValue("amount"));
 
             // Format the amount as a dollar amount
             const formatted = new Intl.NumberFormat("en-US", {
                 style: "currency",
                 currency: "USD",
-            }).format(amount)
+            }).format(amount);
 
-            return <div className="text-right font-medium">{formatted}</div>
+            return <div className="text-right font-medium">{formatted}</div>;
         },
     },
     {
         id: "actions",
         enableHiding: false,
         cell: ({ row }) => {
-            const order = row.original
+            const order = row.original;
 
             return (
                 <DropdownMenu>
@@ -161,9 +142,7 @@ export const columns: ColumnDef<Order>[] = [
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(order.id)}
-                        >
+                        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(order.id)}>
                             Copy Order ID
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
@@ -171,17 +150,17 @@ export const columns: ColumnDef<Order>[] = [
                         <DropdownMenuItem>View Order details</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
-            )
+            );
         },
     },
-]
+];
 
-export default function OrderTable({data}: Props) {
-    const [sorting, setSorting] = React.useState<SortingState>([])
-    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
-    const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
-    const [rowSelection, setRowSelection] = React.useState({})
-    const [, setStatusFilter] = useState<string | undefined>(undefined)
+export default function OrderTable({ data }: Props) {
+    const [sorting, setSorting] = React.useState<SortingState>([]);
+    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+    const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
+    const [rowSelection, setRowSelection] = React.useState({});
+    const [, setStatusFilter] = useState<string | undefined>(undefined);
 
     const table = useReactTable({
         data,
@@ -200,12 +179,12 @@ export default function OrderTable({data}: Props) {
             columnVisibility,
             rowSelection,
         },
-    })
+    });
 
     const handleStatusFilterChange = (status: string | undefined) => {
-        setStatusFilter(status)
-        table.getColumn("status")?.setFilterValue(status)
-    }
+        setStatusFilter(status);
+        table.getColumn("status")?.setFilterValue(status);
+    };
 
     return (
         <div className="w-full">
@@ -213,9 +192,7 @@ export default function OrderTable({data}: Props) {
                 <Input
                     placeholder="Filter emails..."
                     value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-                    onChange={(event) =>
-                        table.getColumn("email")?.setFilterValue(event.target.value)
-                    }
+                    onChange={(event) => table.getColumn("email")?.setFilterValue(event.target.value)}
                     className="max-w-sm"
                 />
                 <DropdownMenu>
@@ -234,13 +211,11 @@ export default function OrderTable({data}: Props) {
                                         key={column.id}
                                         className="capitalize"
                                         checked={column.getIsVisible()}
-                                        onCheckedChange={(value) =>
-                                            column.toggleVisibility(!!value)
-                                        }
+                                        onCheckedChange={(value) => column.toggleVisibility(!!value)}
                                     >
                                         {column.id}
                                     </DropdownMenuCheckboxItem>
-                                )
+                                );
                             })}
                     </DropdownMenuContent>
                 </DropdownMenu>
@@ -257,9 +232,7 @@ export default function OrderTable({data}: Props) {
                         <DropdownMenuItem onClick={() => handleStatusFilterChange("fulfilled")}>
                             Fulfilled
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleStatusFilterChange("pending")}>
-                            Pending
-                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleStatusFilterChange("pending")}>Pending</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
@@ -273,12 +246,9 @@ export default function OrderTable({data}: Props) {
                                         <TableHead key={header.id}>
                                             {header.isPlaceholder
                                                 ? null
-                                                : flexRender(
-                                                        header.column.columnDef.header,
-                                                        header.getContext()
-                                                    )}
+                                                : flexRender(header.column.columnDef.header, header.getContext())}
                                         </TableHead>
-                                    )
+                                    );
                                 })}
                             </TableRow>
                         ))}
@@ -286,26 +256,17 @@ export default function OrderTable({data}: Props) {
                     <TableBody>
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
-                                <TableRow
-                                    key={row.id}
-                                    data-state={row.getIsSelected() && "selected"}
-                                >
+                                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>
-                                            {flexRender(
-                                                cell.column.columnDef.cell,
-                                                cell.getContext()
-                                            )}
+                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </TableCell>
                                     ))}
                                 </TableRow>
                             ))
                         ) : (
                             <TableRow>
-                                <TableCell
-                                    colSpan={columns.length}
-                                    className="h-24 text-center"
-                                >
+                                <TableCell colSpan={columns.length} className="h-24 text-center">
                                     No results.
                                 </TableCell>
                             </TableRow>
@@ -315,8 +276,8 @@ export default function OrderTable({data}: Props) {
             </div>
             <div className="flex items-center justify-end space-x-2 py-4">
                 <div className="flex-1 text-sm text-muted-foreground">
-                    {table.getFilteredSelectedRowModel().rows.length} of{" "}
-                    {table.getFilteredRowModel().rows.length} row(s) selected.
+                    {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length}{" "}
+                    row(s) selected.
                 </div>
                 <div className="space-x-2">
                     <Button
@@ -338,5 +299,5 @@ export default function OrderTable({data}: Props) {
                 </div>
             </div>
         </div>
-    )
+    );
 }
