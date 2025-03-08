@@ -16,8 +16,8 @@ class Server {
         this.app = app;
     }
 
-    start() {
-        this.prisma.connectDB();
+    async start() {
+        await this.prisma.connectDB();
         this.app.listen(this.port, () => {
             console.info(`Listening on url http://localhost:${this.port}`);
         })
