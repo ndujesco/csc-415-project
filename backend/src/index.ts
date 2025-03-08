@@ -6,7 +6,7 @@ import * as dotenv from 'dotenv';
 import { Prisma } from './utils/db';
 import { Application } from 'express';
 
-dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
+dotenv.config();
 
 class Server {
     private port = process.env.PORT || 8000;
