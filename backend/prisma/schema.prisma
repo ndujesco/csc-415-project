@@ -13,9 +13,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
-  id    Int    @id @default(autoincrement())
-  password  String
-  email String @unique
+  id       Int     @id @default(autoincrement())
+  email    String  @unique
+  password String
+  orders   Order[] // A user can have multiple orders
+}
+
+model Order {
+  id       Int      @id @default(autoincrement())
+  amount   Int
+  status   String
+  email    String
+  address  String
+  order    String[] // Storing list of items as a string array
+
+  userId   Int
+  user     User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
