@@ -1,4 +1,6 @@
 
+
+import 'express-async-errors'
 import app from './app';
 import * as dotenv from 'dotenv';
 import { Prisma } from './utils/db';
