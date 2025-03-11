@@ -1,7 +1,7 @@
 
 import { IsEmail, Length } from "class-validator";
 
-class Auth {
+class AuthDTO {
   @IsEmail()
   email!: string;
 
@@ -11,4 +11,4 @@ class Auth {
 
 
 
-export { Auth };
+export { AuthDTO };
