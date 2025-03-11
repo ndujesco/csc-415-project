@@ -10,20 +10,18 @@ export default class RequestValidator {
     ) => {
       return async (req: Request, res: Response, next: NextFunction) => {
         const objectClass = plainToInstance(classInstance, req[location]);
-        await validate(objectClass).then((errors) => {
-          if (errors.length > 0) {
-            let rawErrors: string[] = [];
-            for (const error of errors) {
-              rawErrors = rawErrors.concat(
-                ...rawErrors,
-                Object.values(error.constraints ?? [])
-              );
-            }
-            console .error(rawErrors);
-            next(new BadRequestError('Input validation failed!', rawErrors));
-          }
-        });
+        const errors = await validate(objectClass);
+
+        if (errors.length > 0) {
+          const rawErrors: string[] = errors.flatMap(error => 
+            Object.values(error.constraints ?? [])
+          );
+
+          console.error(rawErrors);
+          return next(new BadRequestError('Input validation failed!', rawErrors));
+        }
+
         next();
       };
     };
-  }
+}

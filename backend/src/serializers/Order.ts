@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import { IsInt, IsString, IsArray, Min, Length, IsOptional, IsEmail } from "class-validator";
 
 class CreateOrderDTO {
