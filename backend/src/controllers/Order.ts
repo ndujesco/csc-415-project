@@ -6,7 +6,7 @@ import { CreateOrderDTO, UpdateOrderDTO } from '../serializers/Order';
 
 export default class OrderController {
     static createOrder = async (req: AuthRequest, res: Response) => {
-        const { amount, address, order, email, status } = req.body as CreateOrderDTO;
+        const { amount, address, productIds, email, status } = req.body as CreateOrderDTO;
 
         const user = await prisma.user.findUnique({
             where: { id: req.user.id },
@@ -16,19 +16,30 @@ export default class OrderController {
             throw new BadRequestError('User not found');
         }
 
+        // Validate product IDs
+        const products = await prisma.product.findMany({
+            where: { id: { in: productIds } },
+        });
+
+        if (productIds.length !== products.length) {
+            throw new BadRequestError('Some products were not found');
+        }
+
         const newOrder = await prisma.order.create({
             data: {
                 amount,
                 address,
-                order,
                 email: email || user.email,
                 userId: user.id,
-                status: status || 'pending'
+                status: status || 'pending',
+                products: { connect: products.map((p) => p) }
             },
         });
 
+
         res.json(newOrder);
     };
+
 
     static getOrders = async (req: AuthRequest, res: Response) => {
         const orders = await prisma.order.findMany({
@@ -53,7 +64,7 @@ export default class OrderController {
 
     static updateOrder = async (req: AuthRequest, res: Response) => {
         const { id } = req.params;
-        const { amount, address, order, status, email } = req.body as UpdateOrderDTO;
+        const { amount, address, productIds, status, email } = req.body as UpdateOrderDTO;
 
         const existingOrder = await prisma.order.findUnique({
             where: { id: parseInt(id), userId: req.user.id },
@@ -63,9 +74,23 @@ export default class OrderController {
             throw new BadRequestError('Order not found');
         }
 
+        const products = await prisma.product.findMany({
+            where: { id: { in: productIds } },
+        });
+
+        if (productIds.length !== products.length) {
+            throw new BadRequestError('Some products were not found');
+        }
+
         const updatedOrder = await prisma.order.update({
             where: { id: parseInt(id) },
-            data: { amount, address, order, status, email },
+            data: {
+                amount,
+                address,
+                products: { set: products }, // Ensure array update works
+                status,
+                email
+            },
         });
 
         res.json(updatedOrder);

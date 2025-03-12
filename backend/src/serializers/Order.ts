@@ -1,5 +1,6 @@
-import 'reflect-metadata'
-import { IsInt, IsString, IsArray, Min, Length, IsOptional, IsEmail } from "class-validator";
+import 'reflect-metadata';
+import { IsInt, IsArray, Min, IsString, Length, IsOptional, IsEmail } from "class-validator";
+import { Product } from '@prisma/client';
 
 class CreateOrderDTO {
     @IsInt()
@@ -11,7 +12,8 @@ class CreateOrderDTO {
     address!: string;
 
     @IsArray()
-    order!: string[];
+    @IsInt({ each: true }) // Ensure all values are numbers
+    productIds!: number[] 
 
     @IsOptional()
     @IsEmail()
@@ -23,12 +25,9 @@ class CreateOrderDTO {
     status?: string;
 }
 
-
 class UpdateOrderDTO extends CreateOrderDTO {
     @IsEmail()
     email!: string;
 }
-
-
 
 export { CreateOrderDTO, UpdateOrderDTO };

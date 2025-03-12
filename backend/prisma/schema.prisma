@@ -14,20 +14,32 @@ datasource db {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  email    String  @unique
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
   password String
-  orders   Order[] // A user can have multiple orders
+  orders   Order[]  // A user can have multiple orders
 }
 
 model Order {
-  id       Int      @id @default(autoincrement())
-  amount   Int
-  status   String
-  email    String
-  address  String
-  order    String[] // Storing list of items as a string array
+  id        Int       @id @default(autoincrement())
+  amount    Int
+  status    String
+  email     String
+  address   String
+  userId    Int
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  userId   Int
-  user     User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  products  Product[]  // Implicit many-to-many relation
 }
+
+model Product {
+  id       Int      @id @default(autoincrement())
+  name     String
+  price    Int
+  status   String
+  quantity Int
+  category String
+
+  orders   Order[]  // Implicit many-to-many relation
+}
+
