@@ -1,4 +1,4 @@
-import { IsInt, Min } from "class-validator";
+import { Min } from "class-validator";
 import { Type } from "class-transformer";
 
 class IdParamDTO {
