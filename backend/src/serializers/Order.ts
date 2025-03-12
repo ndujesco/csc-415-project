@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import { IsInt, IsArray, Min, IsString, Length, IsOptional, IsEmail } from "class-validator";
-import { Product } from '@prisma/client';
 
 class CreateOrderDTO {
     @IsInt()

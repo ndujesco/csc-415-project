@@ -21,9 +21,12 @@ export default class OrderController {
             where: { id: { in: productIds } },
         });
 
-        if (productIds.length !== products.length) {
-            throw new BadRequestError('Some products were not found');
-        }
+
+        console.log(products);
+
+        // if (productIds.length !== products.length) {
+        //     throw new BadRequestError('Some products were not found');
+        // }
 
         const newOrder = await prisma.order.create({
             data: {
@@ -32,7 +35,7 @@ export default class OrderController {
                 email: email || user.email,
                 userId: user.id,
                 status: status || 'pending',
-                products: { connect: products.map((p) => p) }
+                products: { connect: products[0] }
             },
         });
 
@@ -43,7 +46,7 @@ export default class OrderController {
 
     static getOrders = async (req: AuthRequest, res: Response) => {
         const orders = await prisma.order.findMany({
-            where: { userId: req.user.id },
+            where: { userId: req.user.id }, include: { products: true }
         });
 
         res.json(orders);
@@ -53,6 +56,7 @@ export default class OrderController {
         const { id } = req.params;
         const order = await prisma.order.findUnique({
             where: { id: parseInt(id), userId: req.user.id },
+            include: { products: true }
         });
 
         if (!order) {
@@ -77,6 +81,8 @@ export default class OrderController {
         const products = await prisma.product.findMany({
             where: { id: { in: productIds } },
         });
+
+
 
         if (productIds.length !== products.length) {
             throw new BadRequestError('Some products were not found');

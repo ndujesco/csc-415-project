@@ -19,7 +19,6 @@ model User {
   password String
   orders   Order[]  // A user can have multiple orders
 }
-
 model Order {
   id        Int       @id @default(autoincrement())
   amount    Int
@@ -27,9 +26,8 @@ model Order {
   email     String
   address   String
   userId    Int
-  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  products  Product[]  // Implicit many-to-many relation
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  products  Product[] // Implicit many-to-many relation
 }
 
 model Product {
@@ -39,7 +37,5 @@ model Product {
   status   String
   quantity Int
   category String
-
   orders   Order[]  // Implicit many-to-many relation
 }
-
