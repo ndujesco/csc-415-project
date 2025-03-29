@@ -1,5 +1,7 @@
 import express from 'express';
 import { Application } from 'express';
+import cors from 'cors'
+
 
 import helloRouter from './routers/Hello';
 import { ErrorHandler } from './middleware/error';
@@ -9,6 +11,7 @@ import productRouter from './routers/Product';
 
 const app: Application = express();
 
+app.use('*', cors({ credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
