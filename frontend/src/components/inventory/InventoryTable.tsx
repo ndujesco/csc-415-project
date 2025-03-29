@@ -117,7 +117,7 @@ export const columns: ColumnDef<InventoryItem>[] = [
 		cell: ({ row }) => (
 			<div
 				className={`capitalize ${
-					row.getValue("status") === "In Stock"
+					row.getValue("status") === "In Stock" || row.getValue("status") === "in stock"
 						? "text-green-500"
 						: "text-red-500"
 				}`}
@@ -152,7 +152,7 @@ export const columns: ColumnDef<InventoryItem>[] = [
 			// Format the price as a dollar price
 			const formatted = new Intl.NumberFormat("en-US", {
 				style: "currency",
-				currency: "USD",
+				currency: "NGN",
 			}).format(price);
 
 			return <div className="text-right font-medium">{formatted}</div>;

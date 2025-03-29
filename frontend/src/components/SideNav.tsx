@@ -15,33 +15,32 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-const data = {
-    user: {
-        name: "Osemu",
-        email: "obodedaniel3@gmail.com",
-        avatar: "/avatars/shadcn.jpg",
-    },
-    navMain: [
-        {
-            title: "Dashboard",
-            url: "/dashboard",
-            icon: Activity,
-            isActive: true,
-        },
-        {
-            title: "Manage Inventory",
-            url: "/dashboard/inventory",
-            icon: Package,
-        },
-        {
-            title: "Manage Orders",
-            url: "/dashboard/orders",
-            icon: PackageCheck,
-        },
-    ],
-};
-
 export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+    const data = {
+        user: {
+            name: "Admin",
+            email: localStorage.getItem("email") || "",
+            avatar: "/avatars/shadcn.jpg",
+        },
+        navMain: [
+            {
+                title: "Dashboard",
+                url: "/dashboard",
+                icon: Activity,
+                isActive: true,
+            },
+            {
+                title: "Manage Inventory",
+                url: "/dashboard/inventory",
+                icon: Package,
+            },
+            {
+                title: "Manage Orders",
+                url: "/dashboard/orders",
+                icon: PackageCheck,
+            },
+        ],
+    };
     return (
         <Sidebar variant="inset" {...props} collapsible="icon">
             <SidebarHeader>
