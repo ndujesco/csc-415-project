@@ -100,7 +100,7 @@ export const columns: ColumnDef<Order>[] = [
         cell: ({ row }) => <div>{row.getValue("address")}</div>,
     },
     {
-        accessorKey: "order",
+        accessorKey: "products",
         header: ({ column }) => {
             return (
                 <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
@@ -109,7 +109,11 @@ export const columns: ColumnDef<Order>[] = [
                 </Button>
             );
         },
-        cell: ({ row }) => <div className="lowercase">{(row.getValue("order") as string[]).toString()}</div>,
+        cell: ({ row }) => {
+            const products = row.getValue("products") as { name: string }[];
+            const productNames = products.map((product) => product.name).join(", ");
+            return <div className="lowercase">{productNames}</div>;
+        },
     },
     {
         accessorKey: "amount",
@@ -120,7 +124,7 @@ export const columns: ColumnDef<Order>[] = [
             // Format the amount as a dollar amount
             const formatted = new Intl.NumberFormat("en-US", {
                 style: "currency",
-                currency: "USD",
+                currency: "NGN",
             }).format(amount);
 
             return <div className="text-right font-medium">{formatted}</div>;
